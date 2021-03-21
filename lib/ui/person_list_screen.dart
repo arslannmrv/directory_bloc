@@ -11,7 +11,7 @@ class _PersonListScreenState extends State<PersonListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Telephone Directory"),
+        title: Text("Contacts"),
       ),
       body: PersonList(),
     );

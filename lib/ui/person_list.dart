@@ -1,5 +1,5 @@
-import 'package:directory_bloc/bloc/person_bloc.dart';
 import 'package:directory_bloc/model/person.dart';
+import 'package:directory_bloc/person/person_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,6 +31,7 @@ class _PersonListState extends State<PersonList> {
               itemCount: personList.length,
               itemBuilder: (context, index) {
                 return Card(
+                  color: Colors.orange[300],
                   child: ListTile(
                       title: Text(personList[index].personname),
                       subtitle: Text(personList[index].personnumber),
@@ -38,12 +39,7 @@ class _PersonListState extends State<PersonList> {
                 );
               });
         },
-        listener: (BuildContext context, personList) {
-          // ignore: deprecated_member_use
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text("Added"),
-          ));
-        },
+        listener: (BuildContext context, personList) {},
       ),
     );
   }

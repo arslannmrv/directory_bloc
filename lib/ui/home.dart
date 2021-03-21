@@ -1,27 +1,37 @@
-import 'package:directory_bloc/bloc/person_bloc.dart';
-import 'package:directory_bloc/events/person_event.dart';
+import 'package:directory_bloc/person/person_bloc.dart';
+import 'package:directory_bloc/person/person_event.dart';
 import 'package:directory_bloc/model/person.dart';
+import 'package:directory_bloc/theme/theme_cubit.dart';
 import 'package:directory_bloc/ui/person_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DirectoryForm extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _DirectoryFormState createState() => _DirectoryFormState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _DirectoryFormState extends State<DirectoryForm> {
+class _MyHomePageState extends State<MyHomePage> {
   String _personname;
   String _personnumber;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Phone"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.brightness_4),
+            tooltip: '',
+            onPressed: () => context.read<ThemeCubit>().changeTheme(),
+          ),
+        ],
+      ),
       body: Center(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.orange,
+              color: Colors.orange[300],
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.all(Radius.circular(10))),
           height: 300,
@@ -53,12 +63,13 @@ class _DirectoryFormState extends State<DirectoryForm> {
                     });
                   },
                 ),
-                SizedBox(height:35),
+                SizedBox(height: 35),
                 TextButton(
-                  onPressed: () =>
-                      BlocProvider.of<PersonBloc>(context).add(PersonEvent.add(
-                    Person(_personname, _personnumber),
-                  )),
+                  onPressed: () => BlocProvider.of<PersonBloc>(context).add(
+                    PersonEvent.add(
+                      Person(_personname, _personnumber),
+                    ),
+                  ),
                   child: Text("Save"),
                   style: TextButton.styleFrom(
                     primary: Colors.white,
@@ -72,7 +83,7 @@ class _DirectoryFormState extends State<DirectoryForm> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orange,
+          backgroundColor: Colors.teal,
           child: Icon(Icons.navigate_next),
           onPressed: () => Navigator.push(context,
               MaterialPageRoute(builder: (context) => PersonListScreen()))),

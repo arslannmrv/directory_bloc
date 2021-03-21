@@ -1,31 +1,33 @@
-import 'package:directory_bloc/bloc/person_bloc.dart';
-import 'package:directory_bloc/bloc/person_bloc_delegate.dart';
-import 'package:directory_bloc/ui/directory_form.dart';
+import 'package:directory_bloc/person/person_bloc.dart';
+import 'package:directory_bloc/theme/theme_cubit.dart';
+import 'package:directory_bloc/ui/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  BlocSupervisor.delegate=PersonBlocDelegate();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PersonBloc>(create:(context)=>PersonBloc(),
-    child: MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: DirectoryForm(),
-    ),
-    );
-    
-    
-    
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ThemeCubit(),
+          ),
+          BlocProvider(
+            create: (context) => PersonBloc([]),
+          ),
+        ],
+        child: BlocBuilder<ThemeCubit, ThemeData>(
+          builder: (context, theme) {
+            return MaterialApp(
+              theme: theme,
+              home: MyHomePage(),
+              debugShowCheckedModeBanner: false
+            );
+          },
+        ));
   }
 }
-
